@@ -1,0 +1,171 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String    @id @default(cuid())
+  authProviderId String?   @unique
+  name           String
+  email          String    @unique
+  createdAt      DateTime  @default(now())
+  income         Income[]
+  asset          Asset[]
+  expense        Expense[]
+}
+
+model Income {
+  id              String         @id @default(cuid())
+  fonte           Fonte
+  categoria       Categoria
+  forma_pagamento FormaPagamento
+  recorrencia     Recorrencia
+  data            DateTime       @default(now())
+  valor           Float
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  User            User?          @relation(fields: [userId], references: [id])
+  userId          String?
+}
+
+model Expense {
+  id              String           @id @default(cuid())
+  descricao       String
+  categoria       CategoriaDespesa
+  despesa         Despesa
+  forma_pagamento FormaPagamento
+  recorrencia     Recorrencia
+  data            DateTime         @default(now())
+  valor           Float
+  userId          String?
+  User            User?            @relation(fields: [userId], references: [id])
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+model Asset {
+  id             String   @id @default(cuid())
+  tipo           TipoBem
+  descricao      String?
+  valor_estimado Float
+  data_aquisicao DateTime
+  userId         String
+  User           User     @relation(fields: [userId], references: [id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([userId], map: "Asset_userId_idx")
+}
+
+enum TipoBem {
+  CASA
+  CARRO
+  MOTO
+  COMPUTADOR
+  TERRENO
+  JOIA
+  ACOES
+  OUTROS
+}
+
+enum CategoriaDespesa {
+  ALIMENTACAO
+  TRANSPORTE
+  SAUDE
+  EDUCACAO
+  LAZER
+  HABITACAO
+  CONTAS
+  VESTUARIO
+  OUTROS
+}
+
+enum Fonte {
+  SALARIO
+  FREELANCE
+  INVESTIMENTO
+  ALUGUEL
+  OUTROS
+}
+
+enum Categoria {
+  RENDA_PRINCIPAL
+  RENDA_SECUNDARIA
+  BONUS
+  COMISSAO
+  ALUGUEL
+  JUROS
+  OUTROS
+}
+
+enum FormaPagamento {
+  DINHEIRO
+  CARTAO_DE_CREDITO
+  CARTAO_DE_DEBITO
+  TRANSFERENCIA
+  PIX
+  BOLETO
+}
+
+enum Recorrencia {
+  UNICO
+  DIARIO
+  SEMANAL
+  MENSAL
+  TRIMESTRAL
+  ANUAL
+}
+
+enum Situacao {
+  QUITADO
+  NAO_QUITADO
+  PENHORADO
+  IMOVEL_DISPUTA
+  APREENDIDO
+  ALIENADO
+  CONSTRUCAO
+}
+
+enum CategoriaPatrimonio {
+  PATRIMONIO_ATIVO
+  PATRIMONIO_PASSIVO
+  PATRIMONIO_LIQUIDO
+  PATRIMONIO_IMOBILIARIO
+  PATRIMONIO_CULTURAL
+}
+
+enum Despesa {
+  MORADIA
+  CONDOMINIO
+  ALUGUEL
+  SUPERMERCADO
+  AGUA
+  LUZ
+  GAS
+  INTERNET
+  IPTU
+  PLANO_DE_SAUDE
+  SEGURO_DE_VIDA
+  INVESTIMENTO
+  CARTAO_DE_CREDITO
+  COMBUSTIVEL
+  FARMACIA
+  GASTOS_COM_ANIMAIS
+  IMPREVISTOS
+  ASSINATURA_VIDEO
+  ASSINATURA_MUSICA
+  PADARIA
+  FEIRA
+  LAZER
+  SALAO
+  TARIFAS_BANCARIAS
+  PLANO_CELULAR
+  IPVA
+  CONSULTA_MEDICA
+  CURSO
+  DIVERSOS
+}
