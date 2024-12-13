@@ -1,14 +1,14 @@
 import {
   CategoriaDespesa,
-  Despesa,
   FormaPagamento,
   Recorrencia,
+  Despesa,
 } from '@prisma/client';
 
 export type CreateExpenseDTO = {
   userId: string;
-  despesa: Despesa;
   descricao: string;
+  despesa: Despesa;
   data: string | Date;
   categoria: CategoriaDespesa;
   forma_pagamento: FormaPagamento;
@@ -18,8 +18,8 @@ export type CreateExpenseDTO = {
 
 export type UpdateExpenseDTO = {
   userId?: string;
-  despesa?: Despesa;
   descricao?: string;
+  despesa?: Despesa;
   data?: string | Date;
   categoria?: CategoriaDespesa;
   forma_pagamento?: FormaPagamento;

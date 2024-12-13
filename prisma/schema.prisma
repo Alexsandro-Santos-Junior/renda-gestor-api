@@ -21,6 +21,7 @@ model User {
 model Income {
   id              String         @id @default(cuid())
   fonte           Fonte
+  // tipo            TipoDespesa
   categoria       Categoria
   forma_pagamento FormaPagamento
   recorrencia     Recorrencia
@@ -37,6 +38,7 @@ model Expense {
   descricao       String
   categoria       CategoriaDespesa
   despesa         Despesa
+  // tipo            TipoDespesa
   forma_pagamento FormaPagamento
   recorrencia     Recorrencia
   data            DateTime         @default(now())
@@ -45,6 +47,11 @@ model Expense {
   User            User?            @relation(fields: [userId], references: [id])
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
+}
+
+enum TipoDespesa {
+  FIXA
+  VARIADA
 }
 
 model Asset {
@@ -89,6 +96,7 @@ enum Fonte {
   FREELANCE
   INVESTIMENTO
   ALUGUEL
+  VENDA
   OUTROS
 }
 
@@ -99,6 +107,7 @@ enum Categoria {
   COMISSAO
   ALUGUEL
   JUROS
+  VENDA
   OUTROS
 }
 
@@ -109,6 +118,7 @@ enum FormaPagamento {
   TRANSFERENCIA
   PIX
   BOLETO
+  CRIPTOMOEDA
 }
 
 enum Recorrencia {
@@ -142,7 +152,6 @@ enum Despesa {
   MORADIA
   CONDOMINIO
   ALUGUEL
-  SUPERMERCADO
   AGUA
   LUZ
   GAS
@@ -151,6 +160,10 @@ enum Despesa {
   PLANO_DE_SAUDE
   SEGURO_DE_VIDA
   INVESTIMENTO
+  TARIFAS_BANCARIAS
+  PLANO_CELULAR
+  IPVA
+  SUPERMERCADO
   CARTAO_DE_CREDITO
   COMBUSTIVEL
   FARMACIA
@@ -162,9 +175,6 @@ enum Despesa {
   FEIRA
   LAZER
   SALAO
-  TARIFAS_BANCARIAS
-  PLANO_CELULAR
-  IPVA
   CONSULTA_MEDICA
   CURSO
   DIVERSOS

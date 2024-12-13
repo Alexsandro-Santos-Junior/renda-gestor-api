@@ -17,8 +17,9 @@ import {
   UpdateExpenseRequest,
   updateExpenseRequest,
 } from './validation/schema';
-import { ExpenseService } from './expense.service';
+
 import { Request } from 'express';
+import { ExpenseService } from './expense.service';
 
 @Controller('expense')
 export class ExpenseController {
@@ -48,8 +49,8 @@ export class ExpenseController {
         userId,
         descricao: body.descricao,
         data: body.data,
-        despesa: body.despesa,
         categoria: body.categoria,
+        despesa: body.despesa,
         forma_pagamento: body.forma_pagamento,
         recorrencia: body.recorrencia,
         valor: body.valor,
