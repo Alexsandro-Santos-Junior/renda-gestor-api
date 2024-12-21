@@ -41,8 +41,6 @@ export class AssetController {
       throw new UnauthorizedException('Usuário não autenticado');
     }
 
-    console.log('Dados recebidos no backend:', body);
-
     try {
       const createAssetData = await this.assetService.createAsset({
         userId,
