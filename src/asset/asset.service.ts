@@ -7,7 +7,6 @@ export class AssetService {
   constructor(private db: DatabaseService) {}
 
   async createAsset(data: CreateAssetDTO & { userId: string }) {
-    console.log('Dados recebidos no service:', data);
     const createdAsset = await this.db.asset.create({
       data: {
         userId: data.userId,
@@ -67,8 +66,6 @@ export class AssetService {
   }
 
   async getAsset(assetId: string) {
-    console.log('asset ID recebido:', assetId);
-
     const asset = await this.db.asset.findFirst({
       where: { id: assetId },
     });
